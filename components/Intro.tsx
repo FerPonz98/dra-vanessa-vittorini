@@ -1,7 +1,7 @@
 "use client";
 /**
- * Intro de la portada (misma idea que la del CAC): una pluma traza el logo banda por banda,
- * aparece el relleno y el nombre, el logo vuela a su lugar en el menú y el fondo se abre en dos.
+ * Intro de la portada: una pluma traza el monograma "Vv", aparece el nombre, el logo vuela a
+ * su lugar en el menú y el fondo se abre en un círculo desde el centro.
  * Solo corre si <html> tiene data-intro (lo decide el script previo de app/layout.tsx):
  * portada, primera vez en la sesión, sin #ancla y sin "reducir movimiento".
  * Un clic o una tecla la saltan. Si algo falla, la página se muestra sola a los 5 s.
@@ -129,8 +129,11 @@ export default function Intro() {
 
       // 5. El fondo se abre en dos y revela la portada, que entra mientras tanto.
       const a = suave(tramo(ms, T.apertura));
-      arriba.style.transform = `translateY(${(-101 * a).toFixed(2)}%)`;
-      abajo.style.transform = `translateY(${(101 * a).toFixed(2)}%)`;
+      // Vanessa: el fondo se abre como un círculo desde el centro (no en dos paneles).
+      const r = (a * Math.hypot(innerWidth, innerHeight) * 0.55).toFixed(1);
+      const m = `radial-gradient(circle at 50% 50%, transparent ${r}px, #000 ${(+r + 1.5).toFixed(1)}px)`;
+      arriba.style.maskImage = m; arriba.style.webkitMaskImage = m;
+      abajo.style.display = "none";
       if (a > 0 && !abrio) { abrio = true; listo(); }
 
       if (ms >= T.fin) return terminar();

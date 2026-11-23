@@ -9,14 +9,8 @@ import WaLink from "@/components/WaLink";
 import { WaIcon } from "@/components/Icons";
 import { SITE, TREATMENTS } from "@/lib/data";
 
-const fraunces = localFont({
-  src: [
-    { path: "./fonts/fraunces-latin-wght-normal.woff2", style: "normal", weight: "100 900" },
-    { path: "./fonts/fraunces-latin-wght-italic.woff2", style: "italic", weight: "100 900" },
-  ],
-  variable: "--font-fraunces", display: "swap",
-});
-const manrope = localFont({ src: "./fonts/manrope-latin-wght-normal.woff2", weight: "200 800", variable: "--font-manrope", display: "swap" });
+const outfit = localFont({ src: "./fonts/outfit-latin-wght-normal.woff2", weight: "100 900", variable: "--font-sans", display: "swap" });
+const accent = localFont({ src: "./fonts/instrument-serif-latin-400-italic.woff2", style: "italic", weight: "400", variable: "--font-accent", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -49,7 +43,7 @@ const dentistLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const ga = process.env.NEXT_PUBLIC_GA_ID;
   return (
-    <html lang="es" suppressHydrationWarning className={`${fraunces.variable} ${manrope.variable}`}>
+    <html lang="es" suppressHydrationWarning className={`${outfit.variable} ${accent.variable}`}>
       <body>
         <script dangerouslySetInnerHTML={{ __html: "(function(){var d=document.documentElement;try{if(sessionStorage.getItem('intro-vista'))return}catch(e){}if(location.pathname!=='/'||location.hash||!window.matchMedia||matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.setAttribute('data-intro','');setTimeout(function(){d.removeAttribute('data-intro');document.body.classList.add('ready')},5000)})();" }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dentistLd) }} />

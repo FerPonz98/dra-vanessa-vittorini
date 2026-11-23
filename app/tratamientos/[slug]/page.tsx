@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import FaqList from "@/components/FaqList";
-import Split from "@/components/Split";
 import WaLink from "@/components/WaLink";
-import { WaIcon } from "@/components/Icons";
+import { TIcon, WaIcon } from "@/components/Icons";
 import { SITE, TREATMENTS, faqJsonLd } from "@/lib/data";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -32,7 +31,7 @@ export default async function TreatmentPage({ params }: Props) {
   const { slug } = await params;
   const x = TREATMENTS.find((t) => t.slug === slug);
   if (!x) notFound();
-  const others = TREATMENTS.filter((o) => o.slug !== x.slug).slice(0, 6);
+  const others = TREATMENTS.filter((o) => o.slug !== x.slug).slice(0, 4);
   const crumbsLd = {
     "@context": "https://schema.org", "@type": "BreadcrumbList",
     itemListElement: [
@@ -40,45 +39,67 @@ export default async function TreatmentPage({ params }: Props) {
       { "@type": "ListItem", position: 2, name: x.t, item: `${SITE.url}/tratamientos/${x.slug}` },
     ],
   };
+  const msg = `Hola Dra. Vanessa, quisiera información sobre: ${x.t}.`;
 
   return (
-    <main>
+    <main className="vv">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(x.faq)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbsLd) }} />
-      <section className="tp-hero">
-        <div className="wrap">
-          <div className="crumbs hero-in"><Link href="/">Inicio</Link> / <Link href="/#tratamientos">Tratamientos</Link> / {x.t}</div>
-          <div className="tp-grid">
-            <div className="blocks">
-              <div>
-                <span className="kicker hero-in" style={d(100)}>{x.cat} · Cochabamba</span>
-                <h1><Split text={x.t} base={150} /></h1>
-                <p className="lead hero-in" style={d(450)}>{x.intro}</p>
-                <div className="chips hero-in" style={d(600)}>{x.tags.map((g) => <span key={g}>{g}</span>)}</div>
-              </div>
-              <div>
-                <h2 data-rv>¿Es para <span className="it">ti</span>?</h2>
-                <div className="forwho">{x.who.map((w, i) => <div key={w} data-rv style={d(i * 80)}>{w}</div>)}</div>
-              </div>
-              <div>
-                <h2 data-rv>Cómo es el <span className="it">proceso</span></h2>
-                <div className="proc">{x.steps.map(([b, s], i) => <div key={b} data-rv="left" style={d(i * 90)}><span className="n">0{i + 1}</span><span><b>{b}</b><span>{s}</span></span></div>)}</div>
-              </div>
-              <div>
-                <h2 data-rv>Preguntas <span className="it">frecuentes</span></h2>
-                <FaqList items={x.faq} />
-              </div>
-              <div>
-                <h2 data-rv>Otros <span className="it">tratamientos</span></h2>
-                <div className="related">{others.map((o, i) => <Link key={o.slug} href={`/tratamientos/${o.slug}`} data-rv style={d(i * 60)}>{o.t}<span>→</span></Link>)}</div>
-              </div>
+
+      <section className="hero-card-wrap">
+        <div className="hero-card tp-card">
+          <div className="hc-text">
+            <div className="crumbs hero-in"><Link href="/">Inicio</Link> / <Link href="/#tratamientos">Tratamientos</Link></div>
+            <span className="tp-ico hero-in" style={d(80)}><TIcon name={x.icon} /></span>
+            <span className="tagline hero-in" style={d(120)}>{x.cat} · Cochabamba</span>
+            <h1 className="hero-in" style={d(200)}>{x.t}</h1>
+            <p className="hero-in" style={d(350)}>{x.intro}</p>
+            <div className="tags hero-in" style={d(450)}>{x.tags.map((g) => <span key={g}>{g}</span>)}</div>
+            <div className="hc-cta hero-in" style={d(550)}>
+              <WaLink className="btn btn-rosa btn-lg" msg={msg} src="pagina-tratamiento" t={x.t}><WaIcon /> Consultar por WhatsApp</WaLink>
             </div>
-            <aside className="side-card hero-in" style={d(500)}>
-              <h3>Consulta por {x.t.toLowerCase()}</h3>
-              <p>Escríbale a la doctora con el mensaje ya listo. Le responde y coordinan su valoración.</p>
-              <WaLink className="btn btn-wa" msg={`Hola Dra. Vanessa, quisiera información sobre: ${x.t}.`} src="pagina-tratamiento" t={x.t}><WaIcon /> Consultar por WhatsApp</WaLink>
-              <ul><li>Valoración personalizada</li><li>Plan y presupuesto claros</li><li>Formación en 4 países</li></ul>
-            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec">
+        <div className="wrap">
+          <div className="sec-head"><h2 data-rv>¿Es para <em>usted</em>?</h2></div>
+          <div className="who">{x.who.map((w, i) => <div key={w} data-rv style={d(i * 80)}><span>✓</span>{w}</div>)}</div>
+        </div>
+      </section>
+
+      <section className="sec papas">
+        <div className="wrap">
+          <div className="sec-head center"><h2 data-rv>Cómo es <em>el proceso</em></h2></div>
+          <ol className="ages steps4">
+            {x.steps.map(([b, s], i) => (
+              <li key={b} data-rv style={d(i * 120)}><span className="dot" /><b className="age">Paso {i + 1}</b><h4>{b}</h4><p>{s}</p></li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="sec faq-sec">
+        <div className="wrap faq-wrap">
+          <div className="faq-side" data-rv>
+            <h2>Preguntas <em>frecuentes</em></h2>
+            <p>Sobre {x.t.toLowerCase()}. Si tiene otra duda, escríbale a la doctora.</p>
+            <WaLink className="btn btn-ciruela" msg={msg} src="pagina-tratamiento-faq" t={x.t}><WaIcon /> Consultar</WaLink>
+          </div>
+          <FaqList items={x.faq} />
+        </div>
+      </section>
+
+      <section className="sec">
+        <div className="wrap">
+          <div className="sec-head"><h2 data-rv>Otros <em>tratamientos</em></h2></div>
+          <div className="mini">
+            {others.map((o, i) => (
+              <Link key={o.slug} href={`/tratamientos/${o.slug}`} className="b-card t-crema" data-rv style={d(i * 80)}>
+                <span className="b-ico"><TIcon name={o.icon} /></span><small>{o.cat}</small><h3>{o.t}</h3><span className="b-go">Ver <i>→</i></span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
