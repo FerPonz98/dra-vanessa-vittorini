@@ -12,7 +12,8 @@ export default function BeforeAfter({ title, before, after, d = 0 }: { title: st
       <div className="cmp" ref={ref}
         onPointerDown={(e) => { drag.current = true; ref.current!.setPointerCapture(e.pointerId); set(e.clientX); }}
         onPointerMove={(e) => drag.current && set(e.clientX)}
-        onPointerUp={() => (drag.current = false)}>
+        onPointerUp={() => (drag.current = false)}
+        onPointerCancel={() => (drag.current = false)}>
         <div className="side before" style={before ? { background: `url(${before}) center/cover` } : undefined}><span className="tag">ANTES</span>{!before && "Foto de antes"}</div>
         <div className="side after" style={{ clipPath: `inset(0 0 0 ${p}%)`, ...(after ? { background: `url(${after}) center/cover` } : {}) }}><span className="tag">DESPUÉS</span>{!after && "Foto de después"}</div>
         <div className="handle" style={{ left: `${p}%` }} />

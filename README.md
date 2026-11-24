@@ -9,19 +9,23 @@ Next.js (App Router) + TypeScript, sin librerías de UI ni de animación.
 npm install
 npm run dev     # http://localhost:3000
 npm run build   # build de producción
+npm run test:e2e  # pruebas Playwright en 1440 / 768 / 390 px (compila y levanta el sitio en :3100)
 ```
+
+La primera vez: `npx playwright install chromium`.
 
 ## Estructura
 
 | Ruta | Qué es |
 | --- | --- |
-| `app/page.tsx` | Inicio: hero, tratamientos, filosofía, antes/después, videos, formación, reseñas, pasos, FAQ, contacto |
+| `app/page.tsx` | Inicio: hero, tratamientos (bento), guía para papás, antes/después, formación, reseñas, FAQ, contacto |
 | `app/tratamientos/[slug]/page.tsx` | Una página por tratamiento (8), con su metadata, FAQ y breadcrumbs para Google |
 | `app/sitemap.ts` · `app/robots.ts` | `/sitemap.xml` y `/robots.txt` automáticos |
-| `lib/data.ts` | **Todo el contenido editable**: datos del consultorio, tratamientos, FAQ, videos |
+| `lib/data.ts` | **Todo el contenido editable**: datos del consultorio, tratamientos, FAQ, formación |
 | `components/Intro.tsx` | Animación de entrada con el logo (una vez por sesión) |
 | `components/Motion.tsx` | Reveal al hacer scroll, barra de progreso, header que se oculta, contadores |
-| `public/img` · `public/video` | Fotos y videos del doctor |
+| `public/img` | Foto de la doctora y logo |
+| `tests/sitio.spec.ts` | Pruebas de punta a punta (Playwright) |
 
 ## Variables de entorno (Vercel → Settings → Environment Variables)
 

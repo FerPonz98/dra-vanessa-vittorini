@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer>
           <div className="wrap">
             <span>© {new Date().getFullYear()} {SITE.name} · Ortodoncia y Ortopedia Maxilar · {SITE.city}</span>
-            <span>Sitio por <a href={SITE.author.url} target="_blank" rel="noopener">{SITE.author.name}</a></span>
+            <span>Sitio web desarrollado por <a href={SITE.author.url} target="_blank" rel="noopener">{SITE.author.name}</a></span>
           </div>
         </footer>
         <WaLink className="float" msg="Hola Dra. Vanessa, quisiera información." src="flotante" ariaLabel="Escribir por WhatsApp"><WaIcon /><b>WhatsApp</b></WaLink>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import BeforeAfter from "@/components/BeforeAfter";
 import FaqList from "@/components/FaqList";
 import WaLink from "@/components/WaLink";
+import Flag from "@/components/Flag";
 import { TIcon, WaIcon } from "@/components/Icons";
 import { FORMACION, GENERAL_FAQ, SITE, TREATMENTS, faqJsonLd } from "@/lib/data";
 
@@ -44,8 +45,11 @@ export default function Home() {
             <span className="sticker s2">✨ Niños y adultos</span>
           </div>
           <div className="hc-stats hero-in" style={d(700)}>
-            <div><b data-count="4">0</b><span>países de formación</span></div>
-            <div><b data-count="8">0</b><span>tratamientos</span></div>
+            <a className="st-paises" href="#formacion" aria-label="4 países de formación: ver formación">
+              <b data-count="4">4</b><span>países de formación</span>
+              <span className="flags">{FORMACION.map((f) => <Flag key={f.pais} pais={f.pais} />)}</span>
+            </a>
+            <div><b data-count="8">8</b><span>tratamientos</span></div>
             <div><b>6–7</b><span>años: primera consulta</span></div>
           </div>
         </div>
@@ -92,7 +96,7 @@ export default function Home() {
               <li key={edad} data-rv style={d(i * 120)}>
                 <span className="dot" />
                 <b className="age">{edad}</b>
-                <h4>{t}</h4>
+                <h3>{t}</h3>
                 <p>{p}</p>
               </li>
             ))}
@@ -131,6 +135,7 @@ export default function Home() {
             {FORMACION.map((f, i) => (
               <div className="stop" key={f.lugar} data-rv style={d(i * 130)}>
                 <span className="n">{String(i + 1).padStart(2, "0")}</span>
+                <Flag pais={f.pais} />
                 <small>{f.pais}</small>
                 <b>{f.titulo}</b>
                 <span className="where">{f.lugar}</span>
@@ -145,7 +150,7 @@ export default function Home() {
         <div className="wrap">
           <div className="sec-head row">
             <h2 data-rv>Lo que dicen <em>los papás y pacientes</em></h2>
-            <a className="btn btn-line" href={SITE.reviewUrl} target="_blank" rel="noopener" data-rv>⭐ Dejar una reseña</a>
+            {SITE.reviewUrl && <a className="btn btn-line" href={SITE.reviewUrl} target="_blank" rel="noopener" data-rv>⭐ Dejar una reseña</a>}
           </div>
           <div className="quotes">
             {/* Reemplazar con reseñas reales de Google */}

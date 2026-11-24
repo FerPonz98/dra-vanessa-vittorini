@@ -74,7 +74,7 @@ export default async function TreatmentPage({ params }: Props) {
           <div className="sec-head center"><h2 data-rv>Cómo es <em>el proceso</em></h2></div>
           <ol className="ages steps4">
             {x.steps.map(([b, s], i) => (
-              <li key={b} data-rv style={d(i * 120)}><span className="dot" /><b className="age">Paso {i + 1}</b><h4>{b}</h4><p>{s}</p></li>
+              <li key={b} data-rv style={d(i * 120)}><span className="dot" /><b className="age">Paso {i + 1}</b><h3>{b}</h3><p>{s}</p></li>
             ))}
           </ol>
         </div>

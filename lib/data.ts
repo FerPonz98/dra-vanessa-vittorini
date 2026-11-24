@@ -13,15 +13,17 @@ export const SITE = {
   city: "Cochabamba, Bolivia",
   mapQuery: "Torres Sofer, Cochabamba, Bolivia",
   // Reemplazar con el enlace real de reseñas del Perfil de Empresa de Google
-  reviewUrl: "https://g.page/r/REEMPLAZAR/review",
-  author: { name: "Fernando Ponz", url: "https://wa.me/59177108880" },
+  // Enlace "Pedir reseñas" del Perfil de Empresa de Google (https://g.page/r/<id>/review).
+  // Mientras esté vacío, el botón "Dejar una reseña" no se muestra.
+  reviewUrl: "",
+  author: { name: "FerPonz", url: "https://wa.me/59177108880" },
 };
 
 export const waLink = (msg: string) =>
   `https://wa.me/${SITE.phone}?text=${encodeURIComponent(msg)}`;
 
 export type Faq = [string, string];
-export type IconName = "implant" | "sparkle" | "crown" | "wisdom" | "jaw" | "gum" | "shield" | "smile";
+export type IconName = "sparkle" | "crown" | "jaw" | "gum" | "shield" | "smile";
 export type Treatment = {
   slug: string; icon: IconName; cat: string; t: string; short: string; seo: string;
   intro: string; tags: string[]; who: string[]; steps: [string, string][]; faq: Faq[];
